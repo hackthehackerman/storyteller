@@ -240,6 +240,53 @@ export default function Home() {
     [panels]
   );
 
+  const handlePublishClick = useCallback(() => {
+    const payload = [
+      {
+        description: panels[0].description,
+        image: panels[0].image,
+      },
+      {
+        description: panels[1].description,
+        image: panels[1].image,
+      },
+      {
+        description: panels[2].description,
+        image: panels[2].image,
+      },
+      {
+        description: panels[3].description,
+        image: panels[3].image,
+      },
+    ];
+
+    fetch("/api/publish", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            "Network response was not ok " +
+              response.statusText
+          );
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+      });
+  }, [panels]);
+
   const [selectValue, setSelectValue] = useState("");
   const handleSelectChange = (value) => {
     console.log(selectValue);
@@ -306,6 +353,15 @@ export default function Home() {
           </div>
         ))}
       </div>
+
+      {panels[0].image != null &&
+        panels[1].image != null &&
+        panels[2].image != null &&
+        panels[3].image != null && (
+          <Button onClick={handlePublishClick}>
+            Publish
+          </Button>
+        )}
     </div>
   );
 }
