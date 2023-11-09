@@ -241,6 +241,9 @@ export default function Home() {
     [panels]
   );
 
+  const [loading, setLoading] = useState(false);
+  const [published, setPublished] = useState(false);
+
   const handlePublishClick = useCallback(() => {
     const payload = [
       {
@@ -261,6 +264,9 @@ export default function Home() {
       },
     ];
 
+    setLoading(true);
+    setPublished(false);
+
     fetch("/api/publish", {
       method: "POST",
       headers: {
@@ -279,6 +285,8 @@ export default function Home() {
       })
       .then((data) => {
         console.log(data);
+        setLoading(false);
+        setPublished(true);
       })
       .catch((error) => {
         console.error(
@@ -364,11 +372,26 @@ export default function Home() {
       {panels[0].image != null &&
         panels[1].image != null &&
         panels[2].image != null &&
-        panels[3].image != null && (
+        panels[3].image != null &&
+        !loading &&
+        !published && (
           <Button onClick={handlePublishClick}>
             Publish
           </Button>
         )}
+
+      {panels[0].image != null &&
+        panels[1].image != null &&
+        panels[2].image != null &&
+        panels[3].image != null &&
+        loading && <div>Publishing...</div>}
+
+      {panels[0].image != null &&
+        panels[1].image != null &&
+        panels[2].image != null &&
+        panels[3].image != null &&
+        !loading &&
+        published && <div>Published!</div>}
     </div>
   );
 }

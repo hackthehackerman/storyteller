@@ -62,25 +62,28 @@ export default function Feed() {
     <div
       className={`flex min-h-screen flex-col gap-y-24 p-24`}
     >
-      {panels.map((panel, index) => (
-        // <div className="h-fit w-96">
-        //   <Panel key={index} panel={panel} />
-        // </div>
-        <div>
-          <span>Comic: {index + 1}</span>
+      {panels
+        .slice()
+        .reverse()
+        .map((panel, index) => (
+          // <div className="h-fit w-96">
+          //   <Panel key={index} panel={panel} />
+          // </div>
+          <div>
+            <span>Comic: {index + 1}</span>
 
-          <div className="grid grid-cols-2 gap-4 place-content-start w-fit">
-            {panel.map((individual_panel, index) => (
-              <div className="h-fit w-96">
-                <Panel
-                  key={index}
-                  panel={individual_panel}
-                />
-              </div>
-            ))}
+            <div className="grid grid-cols-2 gap-4 place-content-start w-fit">
+              {panel.map((individual_panel, index) => (
+                <div className="h-fit w-96">
+                  <Panel
+                    key={index}
+                    panel={individual_panel}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 }
