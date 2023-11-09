@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, useCallback } from "react";
@@ -303,6 +304,12 @@ export default function Home() {
         Story teller is an interactive comic generator where
         you can create your own stories
       </h2>
+      <h2>
+        Check out other people's creations{" "}
+        <Link href="/feed" className="text-blue-600">
+          Here
+        </Link>
+      </h2>
       <div className="flex flex-row items-center gap-x-2">
         <Select
           onValueChange={handleSelectChange}
@@ -337,7 +344,7 @@ export default function Home() {
         {panels.map((panel, index) => (
           <div className="h-fit w-96">
             <Panel
-              key={index}
+              key={index + "asdasd"}
               panel={panel}
               onInputChange={(e) =>
                 handleInputChange(e, index)

@@ -10,9 +10,20 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // defaults to process.env["OPENAI_API_KEY"]
 });
 
-function downloadImage(url, filepath) {
-  client.get(url, (res) => {
-    res.pipe(fs.createWriteStream(filepath));
+async function downloadImage(url, filepath) {
+  return new Promise((resolve, reject) => {
+    client
+      .get(url, (res) => {
+        const writeStream = fs.createWriteStream(filepath);
+        res.pipe(writeStream);
+        res.on("error", reject);
+        writeStream.on("finish", resolve);
+        writeStream.on("error", (writeErr) => {
+          writeStream.close();
+          reject(writeErr);
+        });
+      })
+      .on("error", reject);
   });
 }
 
@@ -23,10 +34,10 @@ export default async function handler(req, res) {
 
   let r = (Math.random() + 1).toString(36).substring(7);
 
-  downloadImage(comics[0].image, "panel1.png");
-  downloadImage(comics[1].image, "panel2.png");
-  downloadImage(comics[2].image, "panel3.png");
-  downloadImage(comics[3].image, "panel4.png");
+  await downloadImage(comics[0].image, "panel1.png");
+  await downloadImage(comics[1].image, "panel2.png");
+  await downloadImage(comics[2].image, "panel3.png");
+  await downloadImage(comics[3].image, "panel4.png");
 
   const blob1 = await put(
     r + "panel1.png",
@@ -63,19 +74,19 @@ export default async function handler(req, res) {
   });
 
   kv.rpush("comics", r);
-  kv.rpush(r, {
+  await kv.rpush(r, {
     description: comics[0].description,
     image: blob1.url,
   });
-  kv.rpush(r, {
+  await kv.rpush(r, {
     description: comics[1].description,
     image: blob2.url,
   });
-  kv.rpush(r, {
+  await kv.rpush(r, {
     description: comics[2].description,
     image: blob3.url,
   });
-  kv.rpush(r, {
+  await kv.rpush(r, {
     description: comics[3].description,
     image: blob4.url,
   });
