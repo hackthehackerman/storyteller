@@ -7,7 +7,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // defaults to process.env["OPENAI_API_KEY"]
 });
 
-export default async function handler(req, res) {
+export async function handler(req, res) {
   const imagePrompt = req.body.imagePrompt;
   const optionsPrompt = req.body.optionsPrompt;
 
