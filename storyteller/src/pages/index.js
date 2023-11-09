@@ -348,7 +348,7 @@ export default function Home() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 place-content-start w-fit">
+      <div className="grid grid-cols-1 gap-4 place-content-start w-fit sm:grid-cols-2">
         {panels.map((panel, index) => (
           <div className="h-fit w-96">
             <Panel
