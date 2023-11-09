@@ -391,7 +391,14 @@ export default function Home() {
         panels[2].image != null &&
         panels[3].image != null &&
         !loading &&
-        published && <div>Published!</div>}
+        published && (
+          <div>
+            Published! Check out your work{" "}
+            <Link href="/feed" className="text-blue-600">
+              Here
+            </Link>
+          </div>
+        )}
     </div>
   );
 }
