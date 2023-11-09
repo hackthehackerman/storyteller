@@ -28,8 +28,8 @@ function Panel({
         <img
           className="object-fill w-full h-full"
           src={panel.image}
-          width={1024}
-          height={1024}
+          width={768}
+          height={768}
         />
         <p class="text-base">{panel.description}</p>
       </div>
@@ -286,22 +286,24 @@ export default function Home() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-2 grid-rows-2 gap-2">
+      <div className="grid grid-cols-2 gap-4 place-content-start w-fit">
         {panels.map((panel, index) => (
-          <Panel
-            key={index}
-            panel={panel}
-            onInputChange={(e) =>
-              handleInputChange(e, index)
-            }
-            onButtonClick={() => handleButtonClick(index)}
-            onOptionClick={(description) => {
-              const newPanels = [...panels];
-              newPanels[index].description = description;
-              setPanels(newPanels);
-              handleButtonClick(index);
-            }}
-          />
+          <div className="h-fit w-96">
+            <Panel
+              key={index}
+              panel={panel}
+              onInputChange={(e) =>
+                handleInputChange(e, index)
+              }
+              onButtonClick={() => handleButtonClick(index)}
+              onOptionClick={(description) => {
+                const newPanels = [...panels];
+                newPanels[index].description = description;
+                setPanels(newPanels);
+                handleButtonClick(index);
+              }}
+            />
+          </div>
         ))}
       </div>
     </div>
