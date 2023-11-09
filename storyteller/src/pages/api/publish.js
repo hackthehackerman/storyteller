@@ -34,35 +34,35 @@ export default async function handler(req, res) {
 
   let r = (Math.random() + 1).toString(36).substring(7);
 
-  await downloadImage(comics[0].image, "panel1.png");
-  await downloadImage(comics[1].image, "panel2.png");
-  await downloadImage(comics[2].image, "panel3.png");
-  await downloadImage(comics[3].image, "panel4.png");
+  await downloadImage(comics[0].image, "/tmp/panel1.png");
+  await downloadImage(comics[1].image, "/tmp/panel2.png");
+  await downloadImage(comics[2].image, "/tmp/panel3.png");
+  await downloadImage(comics[3].image, "/tmp/panel4.png");
 
   const blob1 = await put(
     r + "panel1.png",
-    fs.readFileSync("panel1.png"),
+    fs.readFileSync("/tmp/panel1.png"),
     {
       access: "public",
     }
   );
   const blob2 = await put(
     r + "panel2.png",
-    fs.readFileSync("panel2.png"),
+    fs.readFileSync("/tmp/panel2.png"),
     {
       access: "public",
     }
   );
   const blob3 = await put(
     r + "panel3.png",
-    fs.readFileSync("panel3.png"),
+    fs.readFileSync("/tmp/panel3.png"),
     {
       access: "public",
     }
   );
   const blob4 = await put(
     r + "panel4.png",
-    fs.readFileSync("panel4.png"),
+    fs.readFileSync("/tmp/panel4.png"),
     {
       access: "public",
     }
